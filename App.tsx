@@ -124,7 +124,7 @@ const App: React.FC = () => {
           
           <div className="relative z-10 flex flex-col items-center gap-6 p-10 bg-white/60 backdrop-blur-3xl rounded-[40px] shadow-[0_20px_50px_rgba(255,182,193,0.3)] border border-white animate-in fade-in zoom-in duration-700 max-w-md w-full mx-4">
             <div className="text-center">
-              <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-600 mb-2 font-serif tracking-wide">樱花回忆墙</h1>
+              <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-600 mb-2 font-serif tracking-wide">樱花照片墙</h1>
               <p className="text-rose-600/60 font-medium italic text-sm">Every petal tells a story of you...</p>
             </div>
             
@@ -136,7 +136,7 @@ const App: React.FC = () => {
                   <span className="text-xl group-hover:rotate-12 transition-transform">🎵</span> {uploadedSongs.length > 0 ? `${uploadedSongs.length} 首音乐已载入` : '上传音乐 (必须)'}
                 </button>
                 <button onClick={handleStart} disabled={uploadedSongs.length === 0} className={`w-full px-12 py-5 bg-gradient-to-br from-pink-400 to-rose-500 text-white font-bold rounded-2xl shadow-xl shadow-pink-200 transition-all duration-300 active:scale-95 mt-4 ${uploadedSongs.length === 0 ? 'opacity-40 grayscale' : 'hover:scale-[1.02] hover:brightness-105'}`}>
-                  开启回忆之旅
+                  Start
                 </button>
             </div>
           </div>

@@ -26,64 +26,68 @@
 
         /* 3D 容器透视 */
         .perspective-container {
-            perspective: 1200px;
-            perspective-origin: center;
+            perspective: 2000px;
+            perspective-origin: 50% 50%;
         }
 
-        /* 照片下落与3D翻转组合动画 */
+        /* 模拟物理真实的掉落动画：包含重力加速和复杂的3D翻转 */
         @keyframes photo-realistic-fall {
             0% {
                 transform: 
-                    translateY(-30vh) 
+                    translateY(-40vh) 
                     translateX(0) 
                     rotateX(0deg) 
                     rotateY(0deg) 
                     rotateZ(var(--init-rot));
+                filter: brightness(1);
             }
             25% {
                 transform: 
-                    translateY(7vh) 
+                    translateY(10vh) 
                     translateX(var(--sway-mid)) 
                     rotateX(180deg) 
-                    rotateY(90deg) 
-                    rotateZ(calc(var(--init-rot) + 20deg));
+                    rotateY(45deg) 
+                    rotateZ(calc(var(--init-rot) + 15deg));
+                filter: brightness(1.1);
             }
             50% {
                 transform: 
-                    translateY(45vh) 
+                    translateY(55vh) 
                     translateX(0) 
                     rotateX(360deg) 
-                    rotateY(180deg) 
-                    rotateZ(calc(var(--init-rot) - 20deg));
+                    rotateY(0deg) 
+                    rotateZ(calc(var(--init-rot) - 15deg));
+                filter: brightness(0.9);
             }
             75% {
                 transform: 
-                    translateY(82vh) 
-                    translateX(calc(var(--sway-mid) * -1)) 
+                    translateY(95vh) 
+                    translateX(calc(var(--sway-mid) * -0.8)) 
                     rotateX(540deg) 
-                    rotateY(270deg) 
-                    rotateZ(calc(var(--init-rot) + 10deg));
+                    rotateY(-45deg) 
+                    rotateZ(calc(var(--init-rot) + 5deg));
+                filter: brightness(1.05);
             }
             100% {
                 transform: 
-                    translateY(130vh) 
+                    translateY(140vh) 
                     translateX(0) 
                     rotateX(720deg) 
-                    rotateY(360deg) 
+                    rotateY(0deg) 
                     rotateZ(calc(var(--init-rot) + var(--rot-drift)));
+                filter: brightness(1);
             }
         }
 
         .photo-falling-item {
             position: absolute;
-            top: -20vh;
-            animation: photo-realistic-fall var(--duration) linear infinite;
+            top: -25vh;
+            animation: photo-realistic-fall var(--duration) cubic-bezier(0.4, 0, 0.6, 1) infinite;
             animation-delay: var(--delay);
             transform-style: preserve-3d;
             will-change: transform;
         }
 
-        /* 增强的毛玻璃滚动条 */
         .custom-scrollbar::-webkit-scrollbar {
             width: 4px;
         }
@@ -100,7 +104,9 @@
   "imports": {
     "react": "https://esm.sh/react@^19.2.3",
     "react/": "https://esm.sh/react@^19.2.3/",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "vite": "https://esm.sh/vite@^7.3.0",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>
@@ -108,6 +114,6 @@
 </head>
 <body>
     <div id="root"></div>
-<script type="module" src="/index.tsx"></script>
+    <script type="module" src="/index.tsx"></script>
 </body>
 </html>

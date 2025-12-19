@@ -18,26 +18,51 @@ const PhotoWall: React.FC<PhotoWallProps> = ({ customImages = [] }) => {
     "rounded-[70%_30%_30%_70%_/_60%_40%_60%_40%]",
   ], []);
 
-  const defaultImages = useMemo(() => Array.from({ length: 18 }, (_, i) => `https://picsum.photos/400/600?random=${i + 300}`), []);
+  // Curated high-end IDs from Unsplash (People, Architecture, Technology)
+  const premiumUnsplashIds = [
+    'photo-1534528741775-53994a69daeb', // People - High-end Portrait
+    'photo-1486406146926-c627a92ad1ab', // Architecture - Modern Office
+    'photo-1485827404703-89b55fcc595e', // Tech - Humanoid Robot
+    'photo-1531746020798-e6953c6e8e04', // People - Stylized Portrait
+    'photo-1511818966892-d7d671e672a2', // Architecture - Minimalist Interior
+    'photo-1451187580459-43490279c0fa', // Tech - Digital Earth
+    'photo-1506794778202-cad84cf45f1d', // People - Male Portrait
+    'photo-1485081666477-b3a1e8a49a9f', // Architecture - Brutalist
+    'photo-1518770660439-4636190af475', // Tech - Processor
+    'photo-1507003211169-0a1dd7228f2d', // People - Expression
+    'photo-1503387762-592dea58ef23', // Architecture - Spiral Stairs
+    'photo-1550751827-4bd374c3f58b', // Tech - Matrix/Code
+    'photo-1539571696357-5a69c17a67c6', // People - Street Style
+    'photo-1487958449943-2429e8be8625', // Architecture - Modern Museum
+    'photo-1581091226825-a6a2a5aee158', // Tech - Engineering
+    'photo-1517841905240-472988babdf9', // People - Group Portrait
+    'photo-1449156001437-342eaf64508d', // Architecture - Urban Geometric
+    'photo-1461749280684-dccba630e2f6', // Tech - Programming
+  ];
+
+  const defaultImages = useMemo(() => 
+    premiumUnsplashIds.map(id => `https://images.unsplash.com/${id}?auto=format&fit=crop&q=80&w=800&h=1200`),
+  []);
+  
   const displayImages = customImages.length > 0 ? customImages : defaultImages;
 
   const bgImage = customImages.length > 0 
     ? customImages[0] 
-    : "https://images.unsplash.com/photo-1493673272479-a7e6329e9aed?q=80&w=2069&auto=format&fit=crop";
+    : "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2070&auto=format&fit=crop";
 
-  // 为每张图片生成随机物理属性
+  // Generate physics data for falling photos
   const fallingData = useMemo(() => {
     return displayImages.map((src, i) => {
       return {
         src,
-        left: `${Math.random() * 95}%`, // 随机起始水平位置
-        duration: `${18 + Math.random() * 22}s`, // 下落时长
-        delay: `${-Math.random() * 40}s`, // 随机初始状态
-        initRot: `${(Math.random() - 0.5) * 45}deg`, // 初始 Z 轴角度
-        rotDrift: `${(Math.random() - 0.5) * 90}deg`, // 最终 Z 轴旋转偏移
-        swayMid: `${(Math.random() - 0.5) * 300}px`, // 下落中的左右晃动幅度
+        left: `${Math.random() * 95}%`,
+        duration: `${22 + Math.random() * 15}s`, // Slightly slower for more "weight"
+        delay: `${-Math.random() * 40}s`,
+        initRot: `${(Math.random() - 0.5) * 60}deg`,
+        rotDrift: `${(Math.random() - 0.5) * 120}deg`,
+        swayMid: `${(Math.random() - 0.5) * 400}px`,
         shapeClass: frameShapes[i % frameShapes.length],
-        scale: 0.7 + Math.random() * 0.4, // 随机大小
+        scale: 0.8 + Math.random() * 0.3,
         zIndex: Math.floor(Math.random() * 50)
       };
     });
@@ -45,16 +70,16 @@ const PhotoWall: React.FC<PhotoWallProps> = ({ customImages = [] }) => {
 
   return (
     <div className="fixed inset-0 overflow-hidden bg-[#fff0f3] perspective-container">
-      {/* 背景层 - 保持朦胧美 */}
+      {/* Background Layer */}
       <div className="absolute inset-0 z-0">
         <div 
-          className="absolute inset-0 bg-cover bg-center transition-all duration-[3000ms] scale-110 blur-[50px] opacity-30 animate-[pulse_12s_infinite_alternate]"
+          className="absolute inset-0 bg-cover bg-center transition-all duration-[3000ms] scale-110 blur-[60px] opacity-25 animate-[pulse_15s_infinite_alternate]"
           style={{ backgroundImage: `url(${bgImage})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-tr from-pink-100/50 via-transparent to-white/40" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-pink-100/40 via-transparent to-white/30" />
       </div>
       
-      {/* 物理掉落的照片墙 */}
+      {/* Falling Photos Wall */}
       <div className="relative z-10 w-full h-full">
         {fallingData.map((item, idx) => (
           <div 
@@ -72,13 +97,13 @@ const PhotoWall: React.FC<PhotoWallProps> = ({ customImages = [] }) => {
             } as React.CSSProperties}
           >
             <div 
-              className={`w-[130px] md:w-[170px] aspect-[3/4] p-2 bg-white/75 backdrop-blur-md shadow-[0_15px_35px_rgba(0,0,0,0.15)] transition-all duration-500 group-hover:scale-125 group-hover:!rotate-0 group-hover:z-[200] group-hover:shadow-pink-400/40 group-hover:bg-white overflow-hidden ${item.shapeClass} border border-white/60`}
+              className={`w-[140px] md:w-[190px] aspect-[3/4] p-2 bg-white/80 backdrop-blur-lg shadow-[0_20px_45px_rgba(0,0,0,0.12)] transition-all duration-700 group-hover:scale-125 group-hover:!rotate-0 group-hover:z-[200] group-hover:shadow-pink-300/50 group-hover:bg-white overflow-hidden ${item.shapeClass} border border-white/80`}
               style={{ transform: `scale(${item.scale})` }}
             >
               <img 
                 src={item.src} 
                 alt=""
-                className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-95 group-hover:opacity-100 ${item.shapeClass}`}
+                className={`w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-90 group-hover:opacity-100 ${item.shapeClass}`}
                 loading="lazy"
               />
             </div>
@@ -86,20 +111,20 @@ const PhotoWall: React.FC<PhotoWallProps> = ({ customImages = [] }) => {
         ))}
       </div>
 
-      {/* 预览模态框 - 置于最顶层 */}
+      {/* Modal Preview */}
       {selectedImage && (
         <div 
-          className="fixed inset-0 z-[2000] bg-black/5 backdrop-blur-3xl flex items-center justify-center p-8 cursor-zoom-out animate-in fade-in duration-400"
+          className="fixed inset-0 z-[2000] bg-black/10 backdrop-blur-3xl flex items-center justify-center p-8 cursor-zoom-out animate-in fade-in duration-500"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative animate-in zoom-in-90 duration-500 ease-out">
+          <div className="relative animate-in zoom-in-95 duration-700 ease-out">
             <img 
               src={selectedImage} 
-              className="max-w-[90vw] max-h-[80vh] object-contain border-[16px] border-white shadow-[0_40px_100px_rgba(255,182,193,0.6)] rounded-sm" 
-              alt="Memory"
+              className="max-w-[85vw] max-h-[85vh] object-contain border-[12px] border-white shadow-[0_50px_120px_rgba(0,0,0,0.4)] rounded-sm" 
+              alt="High Definition Memory"
             />
             <button 
-                className="absolute -top-8 -right-8 bg-white shadow-2xl text-pink-400 w-14 h-14 rounded-full flex items-center justify-center text-4xl hover:scale-110 transition-transform active:scale-95 font-thin"
+                className="absolute -top-10 -right-10 bg-white/90 hover:bg-white shadow-2xl text-pink-500 w-16 h-16 rounded-full flex items-center justify-center text-5xl hover:scale-110 transition-all active:scale-95 font-thin"
                 onClick={(e) => { e.stopPropagation(); setSelectedImage(null); }}
             >
                 ×

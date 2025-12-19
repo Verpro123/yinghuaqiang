@@ -1,0 +1,7 @@
+{
+  "name": "Sakura Photo Wall",
+  "description": "A beautiful photo wall application with sliding image rows, a vintage vinyl music player, and a mesmerizing cherry blossom falling effect.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

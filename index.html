@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakura Photo Wall</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #fff0f3;
+        }
+        .vinyl-spin {
+            animation: spin 8s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            from { transform: scale(1.05); }
+            to { transform: scale(1.15); }
+        }
+
+        /* 3D 容器透视 */
+        .perspective-container {
+            perspective: 1200px;
+            perspective-origin: center;
+        }
+
+        /* 照片下落与3D翻转组合动画 */
+        @keyframes photo-realistic-fall {
+            0% {
+                transform: 
+                    translateY(-30vh) 
+                    translateX(0) 
+                    rotateX(0deg) 
+                    rotateY(0deg) 
+                    rotateZ(var(--init-rot));
+            }
+            25% {
+                transform: 
+                    translateY(7vh) 
+                    translateX(var(--sway-mid)) 
+                    rotateX(180deg) 
+                    rotateY(90deg) 
+                    rotateZ(calc(var(--init-rot) + 20deg));
+            }
+            50% {
+                transform: 
+                    translateY(45vh) 
+                    translateX(0) 
+                    rotateX(360deg) 
+                    rotateY(180deg) 
+                    rotateZ(calc(var(--init-rot) - 20deg));
+            }
+            75% {
+                transform: 
+                    translateY(82vh) 
+                    translateX(calc(var(--sway-mid) * -1)) 
+                    rotateX(540deg) 
+                    rotateY(270deg) 
+                    rotateZ(calc(var(--init-rot) + 10deg));
+            }
+            100% {
+                transform: 
+                    translateY(130vh) 
+                    translateX(0) 
+                    rotateX(720deg) 
+                    rotateY(360deg) 
+                    rotateZ(calc(var(--init-rot) + var(--rot-drift)));
+            }
+        }
+
+        .photo-falling-item {
+            position: absolute;
+            top: -20vh;
+            animation: photo-realistic-fall var(--duration) linear infinite;
+            animation-delay: var(--delay);
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        /* 增强的毛玻璃滚动条 */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 182, 193, 0.5);
+            border-radius: 10px;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>

@@ -136,7 +136,7 @@ const App: React.FC = () => {
                   <span className="text-xl group-hover:rotate-12 transition-transform">🎵</span> {uploadedSongs.length > 0 ? `${uploadedSongs.length} 首音乐已载入` : '上传音乐 (必须)'}
                 </button>
                 <button onClick={handleStart} disabled={uploadedSongs.length === 0} className={`w-full px-12 py-5 bg-gradient-to-br from-pink-400 to-rose-500 text-white font-bold rounded-2xl shadow-xl shadow-pink-200 transition-all duration-300 active:scale-95 mt-4 ${uploadedSongs.length === 0 ? 'opacity-40 grayscale' : 'hover:scale-[1.02] hover:brightness-105'}`}>
-                  Start
+                  开启
                 </button>
             </div>
           </div>
